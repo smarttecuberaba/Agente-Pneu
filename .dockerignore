@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.git
+*.md
+testes_manuais/
+tests/
+docs/
+backup_sessao_2026_03_30/
+sql/
+teste_*.py
+cadastro.py
+2w.bat
