@@ -32,7 +32,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("webhook")
 
-CHATWOOT_BASE_URL = os.environ["CHATWOOT_BASE_URL"]
+CHATWOOT_BASE_URL = os.environ["CHATWOOT_BASE_URL"].rstrip("/")
 CHATWOOT_API_TOKEN = os.environ["CHATWOOT_API_TOKEN"]
 WEBHOOK_SECRET = os.environ.get("WEBHOOK_SECRET", "")
 
@@ -77,6 +77,16 @@ def _ja_processado(message_id: str) -> bool:
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
+
+def _extrair_telefone_do_identifier(identifier: str) -> str:
+    """Extrai telefone do identifier do Baileys.
+
+    Baileys envia '5534999999999@s.whatsapp.net' — extrai so o numero.
+    """
+    if not identifier:
+        return ""
+    return identifier.split("@")[0]
+
 
 def _normalizar_telefone(raw: str) -> str:
     """Remove '+' e espacos para casar com contato_externo do banco.
@@ -200,15 +210,23 @@ async def webhook(request: Request):
     sender_meta = meta.get("sender") or {}
     account = payload.get("account") or {}
 
-    # Telefone pode estar em varios lugares dependendo do canal Chatwoot
+    # Telefone pode estar em varios lugares dependendo do canal/provider:
+    #   - API oficial: sender_meta.phone_number ou sender.phone_number
+    #   - Baileys:     sender.identifier = "5534999999999@s.whatsapp.net"
     telefone_raw = (
         sender_meta.get("phone_number")
         or sender.get("phone_number")
+        or _extrair_telefone_do_identifier(sender_meta.get("identifier", ""))
+        or _extrair_telefone_do_identifier(sender.get("identifier", ""))
         or ""
     )
     telefone = _normalizar_telefone(telefone_raw)
     if not telefone:
-        logger.warning("Mensagem sem telefone — ignorando")
+        logger.warning(
+            "Mensagem sem telefone — ignorando. sender=%s sender_meta=%s",
+            {k: sender.get(k) for k in ("phone_number", "identifier", "id", "type")},
+            {k: sender_meta.get(k) for k in ("phone_number", "identifier", "id")},
+        )
         return Response(status_code=200)
 
     texto = payload.get("content") or ""
@@ -262,6 +280,11 @@ async def webhook(request: Request):
             )
 
             # 10. Enviar resposta de texto
+            if not account_id or not conversation_id:
+                logger.error(
+                    "Faltando account_id=%s ou conversation_id=%s — resposta NAO sera enviada!",
+                    account_id, conversation_id,
+                )
             if resposta.texto and account_id and conversation_id:
                 await _enviar_mensagem_chatwoot(
                     account_id, conversation_id, resposta.texto
