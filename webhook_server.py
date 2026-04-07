@@ -168,15 +168,30 @@ async def webhook(request: Request):
         logger.warning("Payload nao e JSON valido")
         return Response(status_code=200)
 
+    # Log do payload para debug (remover em producao estavel)
+    logger.info(
+        "Webhook recebido: event=%s message_type=%s sender_type=%s",
+        payload.get("event"),
+        payload.get("message_type"),
+        (payload.get("sender") or {}).get("type"),
+    )
+
     # 2. Filtrar eventos irrelevantes
     event = payload.get("event")
     message_type = payload.get("message_type")
-    if event != "message_created" or message_type != "incoming":
+    # Chatwoot envia message_type como integer: 0=incoming, 1=outgoing, 2=activity
+    # Aceitar tanto int(0) quanto string("incoming") por seguranca
+    is_incoming = message_type in (0, "incoming")
+    if event != "message_created" or not is_incoming:
+        logger.debug(
+            "Evento ignorado: event=%s, message_type=%s", event, message_type
+        )
         return Response(status_code=200)
 
     # 3. Ignorar mensagens do proprio agente/bot
     sender = payload.get("sender") or {}
     if sender.get("type") != "contact":
+        logger.debug("Sender ignorado: type=%s", sender.get("type"))
         return Response(status_code=200)
 
     # 4. Extrair dados do payload
@@ -185,7 +200,12 @@ async def webhook(request: Request):
     sender_meta = meta.get("sender") or {}
     account = payload.get("account") or {}
 
-    telefone_raw = sender_meta.get("phone_number", "")
+    # Telefone pode estar em varios lugares dependendo do canal Chatwoot
+    telefone_raw = (
+        sender_meta.get("phone_number")
+        or sender.get("phone_number")
+        or ""
+    )
     telefone = _normalizar_telefone(telefone_raw)
     if not telefone:
         logger.warning("Mensagem sem telefone — ignorando")
