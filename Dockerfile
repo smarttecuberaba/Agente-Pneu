@@ -10,6 +10,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY agente_2w/ ./agente_2w/
 COPY webhook_server.py .
 
-EXPOSE 8000
+EXPOSE 5002
 
-CMD ["uvicorn", "webhook_server:app", "--host", "0.0.0.0", "--port", "8000", "--timeout-keep-alive", "65"]
+CMD ["uvicorn", "webhook_server:app", "--host", "0.0.0.0", "--port", "5002", "--timeout-keep-alive", "65"]
