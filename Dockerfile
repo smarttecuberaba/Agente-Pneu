@@ -15,10 +15,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY agente_2w/ ./agente_2w/
 COPY webhook_server.py .
 
-EXPOSE 5002
+EXPOSE 5001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
     CMD curl -f http://localhost:5002/health || exit 1
 
-CMD ["uvicorn", "webhook_server:app", "--host", "0.0.0.0", "--port", "5002", "--workers", "1"]
+CMD ["uvicorn", "webhook_server:app", "--host", "0.0.0.0", "--port", "5001", "--workers", "1"]
