@@ -7,3 +7,5 @@ venv/
 *.egg-info/
 dist/
 build/
+Webhook N8N.json
+*.old
