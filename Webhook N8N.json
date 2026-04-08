@@ -1,0 +1,160 @@
+[
+  {
+    "headers": {
+      "host": "n8n-coolify.smarttecsolutions.com.br",
+      "user-agent": "rest-client/2.1.0 (linux-musl x86_64) ruby/3.4.4p34",
+      "content-length": "2551",
+      "accept": "application/json",
+      "accept-encoding": "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+      "content-type": "application/json",
+      "x-chatwoot-delivery": "c2664b7b-c0a4-4ea8-9030-adeaeff11bb5",
+      "x-chatwoot-signature": "sha256=66b92da07407429b3d1b9ea3a26e42fab93ce60aa93be46a0e0dc7f18b9e238b",
+      "x-chatwoot-timestamp": "1775606353",
+      "x-forwarded-for": "31.97.173.235",
+      "x-forwarded-host": "n8n-coolify.smarttecsolutions.com.br",
+      "x-forwarded-port": "443",
+      "x-forwarded-proto": "https",
+      "x-forwarded-server": "f7e3fab73ce7",
+      "x-real-ip": "31.97.173.235"
+    },
+    "params": {},
+    "query": {},
+    "body": {
+      "account": {
+        "id": 2,
+        "name": "2W PNEUS "
+      },
+      "additional_attributes": {},
+      "content_attributes": {
+        "external_created_at": 1775606352
+      },
+      "content_type": "text",
+      "content": "sera que funciona",
+      "conversation": {
+        "additional_attributes": {},
+        "can_reply": true,
+        "channel": "Channel::Whatsapp",
+        "contact_inbox": {
+          "id": 1080,
+          "contact_id": 1003,
+          "inbox_id": 17,
+          "source_id": "235746527051825",
+          "created_at": "2026-01-12T21:12:01.535Z",
+          "updated_at": "2026-01-12T21:12:01.535Z",
+          "hmac_verified": false,
+          "pubsub_token": "9QRDepYDysRzyeyzRnbTjakj"
+        },
+        "group_type": "individual",
+        "id": 447,
+        "inbox_id": 17,
+        "messages": [
+          {
+            "id": 14923,
+            "content": "sera que funciona",
+            "account_id": 2,
+            "inbox_id": 17,
+            "conversation_id": 447,
+            "message_type": 0,
+            "created_at": 1775606353,
+            "updated_at": "2026-04-07T23:59:13.070Z",
+            "private": false,
+            "status": "sent",
+            "source_id": "3EB0E3AFD436B45B089F45",
+            "content_type": "text",
+            "content_attributes": {
+              "external_created_at": 1775606352
+            },
+            "sender_type": "Contact",
+            "sender_id": 1003,
+            "external_source_ids": {},
+            "additional_attributes": {},
+            "processed_message_content": "sera que funciona",
+            "sentiment": {},
+            "conversation": {
+              "assignee_id": null,
+              "unread_count": 1,
+              "last_activity_at": 1775606353,
+              "contact_inbox": {
+                "source_id": "235746527051825"
+              }
+            },
+            "sender": {
+              "additional_attributes": {},
+              "custom_attributes": {},
+              "email": null,
+              "group_type": "individual",
+              "id": 1003,
+              "identifier": "235746527051825@lid",
+              "name": "Smart Tecnologia Uberaba",
+              "phone_number": "+553484365355",
+              "thumbnail": "",
+              "blocked": false,
+              "type": "contact"
+            }
+          }
+        ],
+        "labels": [],
+        "meta": {
+          "sender": {
+            "additional_attributes": {},
+            "custom_attributes": {},
+            "email": null,
+            "group_type": "individual",
+            "id": 1003,
+            "identifier": "235746527051825@lid",
+            "name": "Smart Tecnologia Uberaba",
+            "phone_number": "+553484365355",
+            "thumbnail": "",
+            "blocked": false,
+            "type": "contact"
+          },
+          "assignee": null,
+          "assignee_type": null,
+          "team": null,
+          "hmac_verified": false
+        },
+        "status": "open",
+        "custom_attributes": {},
+        "snoozed_until": null,
+        "unread_count": 1,
+        "first_reply_created_at": null,
+        "priority": null,
+        "waiting_since": 1775566202,
+        "agent_last_seen_at": 1775606282,
+        "contact_last_seen_at": 0,
+        "last_activity_at": 1775606353,
+        "timestamp": 1775606353,
+        "created_at": 1775566202,
+        "updated_at": 1775606353.080582
+      },
+      "created_at": "2026-04-07T23:59:13.070Z",
+      "id": 14923,
+      "inbox": {
+        "id": 17,
+        "name": "Whatsapp"
+      },
+      "message_type": "incoming",
+      "private": false,
+      "sender": {
+        "account": {
+          "id": 2,
+          "name": "2W PNEUS "
+        },
+        "additional_attributes": {},
+        "avatar": "",
+        "custom_attributes": {},
+        "email": null,
+        "id": 1003,
+        "identifier": "235746527051825@lid",
+        "name": "Smart Tecnologia Uberaba",
+        "phone_number": "+553484365355",
+        "thumbnail": "",
+        "blocked": false
+      },
+      "source_id": "3EB0E3AFD436B45B089F45",
+      "event": "message_incoming"
+    },
+    "webhookUrl": "https://n8n-coolify.smarttecsolutions.com.br/webhook/atendimento2",
+    "executionMode": "production"
+  }
+]

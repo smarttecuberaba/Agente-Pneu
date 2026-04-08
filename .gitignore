@@ -1,11 +1,19 @@
 .env
+.env.*
+!.env.example
 __pycache__/
 *.pyc
 *.pyo
-.venv/
+.pytest_cache/
+.mypy_cache/
 venv/
+.venv/
 *.egg-info/
 dist/
 build/
-Webhook N8N.json
-*.old
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+backup_*
